@@ -19,8 +19,8 @@ services:
             target: final
         environment:
             - Data__Provider=sqlserver
-            - Data__DefaultConnection__ConnectionString=Server=tcp:sql-genvue.database.windows.net,1433;Initial Catalog=sql-db-genvue;Persist Security Info=False;User ID=sqladmin;Password=genvue120!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30
-            #            - Data__DefaultConnection__ConnectionString=Server=db;Database=genvue;Trusted_Connection=False;User Id=sa;Password=qUgeyvYnOKyMy9HRpGMauKlJdsyq1QdIJUtp8Hz6HarKKCIiVm7m3ITHsBFQSMkEcrGXQy4FNHFX6zKq5NTzysbE0EVJnh3HZwl6DkAloQu7GQ1NZVVNnYEFpkAcxdun;MultipleActiveResultSets=true
+            # - Data__DefaultConnection__ConnectionString=Server=tcp:sql-genvue.database.windows.net,1433;Initial Catalog=sql-db-genvue;Persist Security Info=False;User ID=sqladmin;Password=genvue120!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30
+            - Data__DefaultConnection__ConnectionString=Server=db;Database=genvue;Trusted_Connection=False;User Id=sa;Password=qUgeyvYnOKyMy9HRpGMauKlJdsyq1QdIJUtp8Hz6HarKKCIiVm7m3ITHsBFQSMkEcrGXQy4FNHFX6zKq5NTzysbE0EVJnh3HZwl6DkAloQu7GQ1NZVVNnYEFpkAcxdun;MultipleActiveResultSets=true
             - Logging__LogLevel__Default=Information
         ports:
             - 44000:5000
