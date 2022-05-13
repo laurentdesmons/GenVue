@@ -5,7 +5,7 @@
       <h1>{{ appName }}</h1>
     </div>
     <div class="text-md-center">
-      <p>just a test web application for file sharing</p>
+      <p>just a test web application for file sharing 3</p>
     </div>
   </div>
 </template>
