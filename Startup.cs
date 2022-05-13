@@ -79,12 +79,12 @@ namespace GenVue
                 switch (Configuration["Data:Provider"])
                 {
                     case "postgress":
-                         // Configure the context to use Postgress database.
+                        // Configure the context to use Postgress database.
                         // Tested on Postgress 10
                         options.UseNpgsql(Configuration["Data:DefaultConnection:ConnectionString"]);
                         break;
                     case "sqlite":
-                        options.UseSqlite("Filename="+Configuration["Data:DefaultConnection:databaseName"]);
+                        options.UseSqlite("Filename=" + Configuration["Data:DefaultConnection:databaseName"]);
                         break;
                     case "sqlserver":
                         // Configure the context to use Microsoft SQL Server.
@@ -132,54 +132,54 @@ namespace GenVue
             // Register the OpenIddict core services.
             .AddCore(options =>
             {
-                            // Register the Entity Framework stores and models.
-                            options.UseEntityFrameworkCore()
-                       .UseDbContext<DefaultDbContext>();
+                // Register the Entity Framework stores and models.
+                options.UseEntityFrameworkCore()
+           .UseDbContext<DefaultDbContext>();
             })
 
             // Register the OpenIddict server handler.
             .AddServer(options =>
             {
-                            // Register the ASP.NET Core MVC binder used by OpenIddict.
-                            // Note: if you don't call this method, you won't be able to
-                            // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
-                            options.UseMvc();
+                // Register the ASP.NET Core MVC binder used by OpenIddict.
+                // Note: if you don't call this method, you won't be able to
+                // bind OpenIdConnectRequest or OpenIdConnectResponse parameters.
+                options.UseMvc();
 
-                            // Enable the authorization, logout, token and userinfo endpoints.
-                            options.EnableAuthorizationEndpoint("/api/connect/authorize")
-                                   .EnableLogoutEndpoint("/api/connect/logout")
-                                   .EnableTokenEndpoint("/api/connect/token")
-                                   .EnableUserinfoEndpoint("/api/userinfo");
+                // Enable the authorization, logout, token and userinfo endpoints.
+                options.EnableAuthorizationEndpoint("/api/connect/authorize")
+                       .EnableLogoutEndpoint("/api/connect/logout")
+                       .EnableTokenEndpoint("/api/connect/token")
+                       .EnableUserinfoEndpoint("/api/userinfo");
 
-                            options.AllowClientCredentialsFlow()
-                                   .AllowAuthorizationCodeFlow()
-                                   .AllowPasswordFlow()
-                                   .AllowRefreshTokenFlow();
+                options.AllowClientCredentialsFlow()
+                       .AllowAuthorizationCodeFlow()
+                       .AllowPasswordFlow()
+                       .AllowRefreshTokenFlow();
 
-                            // Mark the "email", "profile" and "roles" scopes as supported scopes.
-                            options.RegisterScopes(OpenIdConnectConstants.Scopes.Email,
-                                                   OpenIdConnectConstants.Scopes.Profile,
-                                                   OpenIddictConstants.Scopes.Roles);
+                // Mark the "email", "profile" and "roles" scopes as supported scopes.
+                options.RegisterScopes(OpenIdConnectConstants.Scopes.Email,
+                                       OpenIdConnectConstants.Scopes.Profile,
+                                       OpenIddictConstants.Scopes.Roles);
 
-                            // Accept anonymous clients (i.e clients that don't send a client_id).
-                            //options.AcceptAnonymousClients();
+                // Accept anonymous clients (i.e clients that don't send a client_id).
+                //options.AcceptAnonymousClients();
 
-                            // When request caching is enabled, authorization and logout requests
-                            // are stored in the distributed cache by OpenIddict and the user agent
-                            // is redirected to the same page with a single parameter (request_id).
-                            // This allows flowing large OpenID Connect requests even when using
-                            // an external authentication provider like Google, Facebook or Twitter.
-                            options.EnableRequestCaching();
+                // When request caching is enabled, authorization and logout requests
+                // are stored in the distributed cache by OpenIddict and the user agent
+                // is redirected to the same page with a single parameter (request_id).
+                // This allows flowing large OpenID Connect requests even when using
+                // an external authentication provider like Google, Facebook or Twitter.
+                options.EnableRequestCaching();
 
-                            // During development, you can disable the HTTPS requirement.
-                            options.DisableHttpsRequirement();
+                // During development, you can disable the HTTPS requirement.
+                options.DisableHttpsRequirement();
 
-                            // Note: to use JWT access tokens instead of the default
-                            // encrypted format, the following lines are required:
-                            //
-                            // options.UseJsonWebTokens();
-                            // options.AddEphemeralSigningKey();
-                        })
+                // Note: to use JWT access tokens instead of the default
+                // encrypted format, the following lines are required:
+                //
+                // options.UseJsonWebTokens();
+                // options.AddEphemeralSigningKey();
+            })
 
             // Register the OpenIddict validation handler.
             // Note: the OpenIddict validation handler is only compatible with the
@@ -219,13 +219,10 @@ namespace GenVue
             // Note: in a real world application, this step should be part of a setup script.
             InitializeAsync(app.ApplicationServices, CancellationToken.None).GetAwaiter().GetResult();
 
-            if (env.IsDevelopment())
-            {
-                // init roles and users etc
-                DBInitilizer.Initialize(serviceProvider);
-                GroupsInit.Initialize(serviceProvider);
-                FileCategoriesInit.Initialize(serviceProvider);
-            }
+            // init roles and users etc
+            DBInitilizer.Initialize(serviceProvider);
+            GroupsInit.Initialize(serviceProvider);
+            FileCategoriesInit.Initialize(serviceProvider);
 
             // Idea: https://code.msdn.microsoft.com/How-to-fix-the-routing-225ac90f
             // This avoid having a real mvc view. You have other way of doing, but this one works

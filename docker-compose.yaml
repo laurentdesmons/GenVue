@@ -1,0 +1,35 @@
+services:
+    db:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+            - "1433:1433"
+        environment:
+            SA_PASSWORD: qUgeyvYnOKyMy9HRpGMauKlJdsyq1QdIJUtp8Hz6HarKKCIiVm7m3ITHsBFQSMkEcrGXQy4FNHFX6zKq5NTzysbE0EVJnh3HZwl6DkAloQu7GQ1NZVVNnYEFpkAcxdun
+            ACCEPT_EULA: "Y"
+        volumes:
+            - mssqlsystem:/var/opt/mssql
+            - mssqluser:/var/opt/sqlserver
+
+    app:
+        image: genvue
+        restart: unless-stopped
+        build:
+            context: .
+            dockerfile: ./Dockerfile
+            target: final
+        environment:
+            - Data__Provider=sqlserver
+            - Data__DefaultConnection__ConnectionString=Server=tcp:sql-genvue.database.windows.net,1433;Initial Catalog=sql-db-genvue;Persist Security Info=False;User ID=sqladmin;Password=genvue120!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30
+            #            - Data__DefaultConnection__ConnectionString=Server=db;Database=genvue;Trusted_Connection=False;User Id=sa;Password=qUgeyvYnOKyMy9HRpGMauKlJdsyq1QdIJUtp8Hz6HarKKCIiVm7m3ITHsBFQSMkEcrGXQy4FNHFX6zKq5NTzysbE0EVJnh3HZwl6DkAloQu7GQ1NZVVNnYEFpkAcxdun;MultipleActiveResultSets=true
+            - Logging__LogLevel__Default=Information
+        ports:
+            - 44000:5000
+        volumes:
+            - uploaded_files:/app/UploadedFiles
+        depends_on:
+            - db
+
+volumes:
+    uploaded_files:
+    mssqlsystem:
+    mssqluser:
