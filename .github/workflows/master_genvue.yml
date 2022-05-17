@@ -46,6 +46,6 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'genvue'
-        slot-name: 'staging'
+        slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ddc1602c9bce4dc19e01da2c08fadfe6 }}
         images: 'genvue.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_93cf8779f08042beba5c7dcc53263738 }}/genvue:${{ github.sha }}'
